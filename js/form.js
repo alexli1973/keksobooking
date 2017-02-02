@@ -7,6 +7,7 @@
 // то у этого элемента класс нужно убрать
 var pins = document.querySelectorAll('.pin');
 var dialog = document.querySelector('.dialog');
+// var pinActive = document.querySelector('.pin--active');
 
 dialog.style.display = 'none';
 
@@ -18,24 +19,24 @@ function openDialog() {
   dialog.style.display = 'block';
 }
 
-function disablePin(evt) {
-  evt.classList.remove('pin--active');
-}
-function activePin(evt) {
-  evt.classList.add('pin--active');
+function disablePin() {
+  for (var i = 0; i < pins.length; i++) {
+    pins[i].classList.remove('pin--active');
+  }
 }
 
+function activePin(elem) {
+  elem.classList.add('pin--active');
+}
+
+disablePin();
+
 for (var i = 0; i < pins.length; i++) {
-  var pin = pins[i];
-  var hasPinActive = pin.classList.contains('pin--active');
-  pins[i].addEventListener('click', function () {
-    if (hasPinActive) {
-      disablePin();
-      closeDialog();
-    } else {
-      activePin();
-      openDialog();
-    }
+  pins[i].addEventListener('click', function (event) {
+    var curentPin = event.currentTarget;
+    disablePin();
+    activePin(curentPin);
+    openDialog();
   });
 }
 
@@ -47,21 +48,6 @@ btnDialogClose.addEventListener('click', function () {
   closeDialog();
   disablePin();
 });
-
-// Валидация полей формы
-var title = document.querySelector('#title');
-var price = document.querySelector('#price');
-var address = document.querySelector('#address');
-
-title.required = true;
-title.minLength = 30;
-title.maxLength = 100;
-
-price.required = true;
-price.propertyType = 'number';
-price.min = 1000;
-price.max = 1000000;
-address.required = true;
 
 // Автоматическая корректировка полей в форме
 // 1. Поля «время заезда» и «время выезда» синхронизированы — при изменении значения одного поля,
@@ -83,15 +69,18 @@ timeout.addEventListener('change', function () {
 // «Дворец» — минимальная цена 10000
 var typeHouse = document.querySelector('#type');
 var capacity = document.querySelector('#capacity');
+var price = document.querySelector('#price');
 
 typeHouse.addEventListener('change', function () {
   if (typeHouse.value === 'shack') {
     price.placeholder = '0';
     price.min = '0';
-  } else if (typeHouse.value === 'flat') {
+  }
+  if (typeHouse.value === 'flat') {
     price.placeholder = '1000';
     price.min = '1000';
-  } else {
+  }
+  if (typeHouse.value === 'palace') {
     price.placeholder = '10000';
     price.min = '10000';
   }
