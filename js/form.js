@@ -85,44 +85,44 @@ btnDialogClose.addEventListener('click', function () {
 // Автоматическая корректировка полей в форме
 // 1. Поля «время заезда» и «время выезда» синхронизированы — при изменении значения одного поля,
 // во втором выделяется соответствующее ему
-// var time = document.querySelector('#time');
-// var timeout = document.querySelector('#timeout');
+var time = document.querySelector('#time');
+var timeout = document.querySelector('#timeout');
 
-// time.addEventListener('change', function () {
-//   timeout.value = time.value;
-// });
+time.addEventListener('change', function () {
+  timeout.value = time.value;
+});
 
-// timeout.addEventListener('change', function () {
-//   time.value = timeout.value;
-// });
+timeout.addEventListener('change', function () {
+  time.value = timeout.value;
+});
 
 // 2. Значение поля «Тип жилья» синхронизировано с минимальной ценой следующим образом:
 // «Квартира» — минимальная цена 1000
 // «Лачуга» — минимальная цена 0
 // «Дворец» — минимальная цена 10000
-// var typeHouse = document.querySelector('#type');
-// var capacity = document.querySelector('#capacity');
-// var price = document.querySelector('#price');
+var typeHouse = document.querySelector('#type');
+var capacity = document.querySelector('#capacity');
+var price = document.querySelector('#price');
 
-// typeHouse.addEventListener('change', function () {
-//   if (typeHouse.value === 'shack') {
-//     price.placeholder = '0';
-//     price.min = '0';
-//   }
-//   if (typeHouse.value === 'flat') {
-//     price.placeholder = '1000';
-//     price.min = '1000';
-//   }
-//   if (typeHouse.value === 'palace') {
-//     price.placeholder = '10000';
-//     price.min = '10000';
-//   }
-// });
+typeHouse.addEventListener('change', function () {
+  if (typeHouse.value === 'shack') {
+    price.placeholder = '0';
+    price.min = '0';
+  }
+  if (typeHouse.value === 'flat') {
+    price.placeholder = '1000';
+    price.min = '1000';
+  }
+  if (typeHouse.value === 'palace') {
+    price.placeholder = '10000';
+    price.min = '10000';
+  }
+});
 
-// // 3. Количество комнат связано с количеством гостей:
-// // 2 или 100 комнат — «для 3 гостей»; 1 комната — «не для гостей»
-// var roomNumber = document.querySelector('#room_number');
+// 3. Количество комнат связано с количеством гостей:
+// 2 или 100 комнат — «для 3 гостей»; 1 комната — «не для гостей»
+var roomNumber = document.querySelector('#room_number');
 
-// roomNumber.addEventListener('change', function () {
-//   capacity.value = roomNumber.value === '1' ? '0' : '3';
-// });
+roomNumber.addEventListener('change', function () {
+  capacity.value = roomNumber.value === '1' ? '0' : '3';
+});
