@@ -53,14 +53,16 @@ function activePin(elem) {
 // Если до этого у другого элемента существовал класс pin--active,
 // то у этого элемента класс нужно убрать
 var pinClickHandler = function (evt) {
-  for (var i = 0; i < pins.length; i++) {
-    pins[i].addEventListener('click', function (event) {
-      var curentPin = event.currentTarget;
-      disablePin();
-      activePin(curentPin);
-      openDialog();
-    });
+  var elem = evt.target.classList.contains('pin');
+  var targetPin;
+  if (elem) {
+    targetPin = evt.target;
+  } else {
+    targetPin = evt.target.parentElement;
   }
+  disablePin();
+  activePin(targetPin);
+  openDialog();
   if (isActivateEvent(evt)) {
     var curentPin = event.target;
     disablePin();
@@ -69,8 +71,14 @@ var pinClickHandler = function (evt) {
   }
 };
 
+var pinKeydownHandler = function (evt) {
+  if (isActivateEvent(evt)) {
+    pinClickHandler(evt);
+  }
+};
+
 tokyoPinMap.addEventListener('click', pinClickHandler, true);
-tokyoPinMap.addEventListener('keydown', pinClickHandler, true);
+tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
 
 
 // Закрытие карточки объявления
