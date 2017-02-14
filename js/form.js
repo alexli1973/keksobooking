@@ -20,7 +20,7 @@
   var capacity = document.querySelector('#capacity');
   var price = document.querySelector('#price');
 
-  window.synchronizeFields(typeHouse, price, ['flat', 'shack', 'palace'], ['1000', '1000', '10000'], 'placeholder'); // не работает. совсем
+  window.synchronizeFields(typeHouse, price, ['flat', 'shack', 'palace'], ['1000', '1000', '10000'], 'placeholder'); // с value не работает почему-то
 
   // 3. Количество комнат связано с количеством гостей:
   // 2 или 100 комнат — «для 3 гостей»; 1 комната — «не для гостей»
