@@ -4,16 +4,9 @@ window.initializePins = function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-  var ESCAPE_KEY_CODE = 27;
-  var ENTER_KEY_CODE = 13;
-
-  // обработчики для альтернативного ввода с клавиатуры
-  var isActivateEvent = function (evt) {
-    return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
-  };
 
   var dialogKeydownHendler = function (evt) {
-    if (evt.keyCode === ESCAPE_KEY_CODE) {
+    if (window.utils.isDeactivateEvent(evt)) {
       closeDialog();
       disablePin();
     }
@@ -64,7 +57,7 @@ window.initializePins = function () {
     disablePin();
     activePin(targetPin);
     openDialog();
-    if (isActivateEvent(evt)) {
+    if (window.utils.isActivationEvent(evt)) {
       var curentPin = event.target;
       disablePin();
       activePin(curentPin);
@@ -73,7 +66,7 @@ window.initializePins = function () {
   };
 
   var pinKeydownHandler = function (evt) {
-    if (isActivateEvent(evt)) {
+    if (window.utils.isActivationEvent(evt)) {
       pinClickHandler(evt);
     }
   };
