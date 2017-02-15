@@ -3,10 +3,12 @@
 window.synchronizeFields = function (elem1, elem2, arrea1, arrea2, nameProp) {
 
   elem1.addEventListener('change', function () {
-    elem2[nameProp] = arrea2[nameProp];
+    var value = arrea1[elem1.value];
+    elem2[nameProp] = arrea2[value];
   });
 
   elem2.addEventListener('change', function () {
-    elem1[nameProp] = arrea1[nameProp];
+    var value = arrea2[elem2.value];
+    elem1[nameProp] = arrea1[value];
   });
 };
