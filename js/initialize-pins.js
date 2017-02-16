@@ -60,7 +60,7 @@ window.initializePins = (function () {
     disablePin();
     activePin(targetPin);
     openDialog();
-    if (window.utils.isActivationEvent(evt)) {
+    if (window.utils.isActivateEvent(evt)) {
       var curentPin = event.target;
       disablePin();
       activePin(curentPin);
@@ -69,7 +69,7 @@ window.initializePins = (function () {
   }
 
   function pinKeydownHandler(evt) {
-    if (window.utils.isActivationEvent(evt)) {
+    if (window.utils.isActivateEvent(evt)) {
       pinClickHandler(evt);
     }
   }
