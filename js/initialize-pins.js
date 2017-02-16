@@ -1,16 +1,20 @@
 'use strict';
 
-window.initializePins = function () {
+window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
-  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 
-  var dialogKeydownHendler = function (evt) {
+  function dialogKeydownHendler(evt) {
     if (window.utils.isDeactivateEvent(evt)) {
-      closeDialog();
-      disablePin();
+      closeDialogClickHendler();
     }
-  };
+  }
+
+  // деативировать все метки при закрытии .dialog
+  function closeDialogClickHendler() {
+    closeDialog();
+    disablePin();
+  }
 
   // открыть окно с объявлением по клику на .pin
   function openDialog() {
@@ -25,9 +29,8 @@ window.initializePins = function () {
   }
 
   // окно с объявлением изначально скрыто
-  closeDialog();
   // все метки изначально неактивны
-  disablePin();
+  closeDialogClickHendler();
 
   // сделать метку неактивной
   function disablePin() {
@@ -46,7 +49,7 @@ window.initializePins = function () {
   // и должен показываться элемент .dialog.
   // Если до этого у другого элемента существовал класс pin--active,
   // то у этого элемента класс нужно убрать
-  var pinClickHandler = function (evt) {
+  function pinClickHandler(evt) {
     var elem = evt.target.classList.contains('pin');
     var targetPin;
     if (elem) {
@@ -63,23 +66,17 @@ window.initializePins = function () {
       activePin(curentPin);
       openDialog();
     }
-  };
+  }
 
-  var pinKeydownHandler = function (evt) {
+  function pinKeydownHandler(evt) {
     if (window.utils.isActivationEvent(evt)) {
       pinClickHandler(evt);
     }
+  }
+
+  return {
+    pinClickHandler: pinClickHandler,
+    pinKeydownHandler: pinKeydownHandler,
+    closeDialogClickHendler: closeDialogClickHendler
   };
-
-  tokyoPinMap.addEventListener('click', pinClickHandler, true);
-  tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
-
-  // Закрытие карточки объявления
-  // При нажатии на элемент dialog__close карточка объявления должна скрываться.
-  // При этом должен деактивироваться элемент pin, который был помечен как активный
-  var btnDialogClose = dialog.querySelector('.dialog__close');
-  btnDialogClose.addEventListener('click', function () {
-    closeDialog();
-    disablePin();
-  });
-};
+})();
