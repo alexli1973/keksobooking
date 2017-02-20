@@ -3,6 +3,7 @@
 window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
+  var onDialogClose = null;
 
   function dialogKeydownHendler(evt) {
     if (window.utils.isDeactivateEvent(evt)) {
@@ -26,6 +27,10 @@ window.initializePins = (function () {
   function closeDialog() {
     dialog.style.display = 'none';
     document.removeEventListener('keydown', dialogKeydownHendler);
+
+    if (typeof onDialogClose === 'function') {
+      onDialogClose();
+    }
   }
 
   // окно с объявлением изначально скрыто
@@ -68,15 +73,28 @@ window.initializePins = (function () {
     }
   }
 
+  // вернуть фокус на активную метку,
+  // если карточка была открыта с клавиатуры
+  function focusOpenButton(evt) {
+    var elem = evt.target.classList.contains('pin');
+    return elem.focus();
+  }
+
   function pinKeydownHandler(evt) {
     if (window.utils.isActivateEvent(evt)) {
       pinClickHandler(evt);
+      focusOpenButton();
     }
+  }
+
+  function cbCloseDialog(cb) {
+    onDialogClose = cb;
   }
 
   return {
     pinClickHandler: pinClickHandler,
     pinKeydownHandler: pinKeydownHandler,
-    closeDialogClickHendler: closeDialogClickHendler
+    closeDialogClickHendler: closeDialogClickHendler,
+    cbCloseDialog: cbCloseDialog
   };
 })();
