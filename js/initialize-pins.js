@@ -65,6 +65,9 @@ window.initializePins = (function () {
       disablePin();
       activePin(curentPin);
       openDialog();
+      window.showCard(function () {
+        curentPin.focus();
+      });
     }
   }
 
