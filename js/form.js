@@ -7,9 +7,16 @@
   var time = document.querySelector('#time');
   var timeout = document.querySelector('#timeout');
 
-  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], function (value) {
-    timeout.value = value;
-  });
+  var syncValue = function (elem, value) {
+    elem.value = value;
+  };
+
+  var syncValueWithMin = function (elem, value) {
+    elem.min = value;
+  };
+
+  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], syncValue);
+  window.synchronizeFields(timeout, time, ['12', '13', '14'], ['12', '13', '14'], syncValue);
 
   // 2. Значение поля «Тип жилья» синхронизировано с минимальной ценой следующим образом:
   // «Квартира» — минимальная цена 1000
@@ -19,15 +26,13 @@
   var capacity = document.querySelector('#capacity');
   var price = document.querySelector('#price');
 
-  window.synchronizeFields(typeHouse, price, ['flat', 'shack', 'palace'], ['1000', '1000', '10000'], function (value) {
-    price.value = value;
-  });
+  window.synchronizeFields(typeHouse, price, ['flat', 'shack', 'palace'], ['1000', '1000', '10000'], syncValue);
+  window.synchronizeFields(price, typeHouse, ['1000', '1000', '10000'], ['flat', 'shack', 'palace'], syncValue);
 
   // 3. Количество комнат связано с количеством гостей:
   // 2 или 100 комнат — «для 3 гостей»; 1 комната — «не для гостей»
   var roomNumber = document.querySelector('#room_number');
 
-  window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '0', '3'], function (value) {
-    capacity.value = value;
-  });
+  window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '0', '3'], syncValueWithMin);
+  window.synchronizeFields(capacity, roomNumber, ['1', '2', '100'], ['0', '0', '3'], syncValueWithMin);
 })();

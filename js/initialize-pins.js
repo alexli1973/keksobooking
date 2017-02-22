@@ -2,12 +2,35 @@
 
 window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
+  var dialog = document.querySelector('.dialog');
+
+  function dialogKeydownHendler(evt) {
+    if (window.utils.isDeactivateEvent(evt)) {
+      closeDialogClickHendler();
+    }
+  }
 
   // деативировать все метки при закрытии .dialog
   function closeDialogClickHendler() {
-    window.showCard.closeDialog();
+    closeDialog();
     disablePin();
   }
+
+  // открыть окно с объявлением по клику на .pin
+  function openDialog() {
+    window.showCard(dialog);
+    document.addEventListener('keydown', dialogKeydownHendler);
+  }
+
+  // закрыть окно с объявлением по клику на .pin
+  function closeDialog() {
+    dialog.style.display = 'none';
+    document.removeEventListener('keydown', dialogKeydownHendler);
+  }
+
+  // окно с объявлением изначально скрыто
+  // все метки изначально неактивны
+  closeDialogClickHendler();
 
   // сделать метку неактивной
   function disablePin() {
@@ -36,32 +59,24 @@ window.initializePins = (function () {
     }
     disablePin();
     activePin(targetPin);
-    window.showCard.openDialog();
+    openDialog();
     if (window.utils.isActivateEvent(evt)) {
       var curentPin = event.target;
       disablePin();
       activePin(curentPin);
-      window.showCard.openDialog();
+      openDialog();
     }
-  }
-
-  // вернуть фокус на активную метку,
-  // если карточка была открыта с клавиатуры
-  function focusPin() {
-    var pinActive = document.querySelector('.pin--active');
-    pinActive.focus();
   }
 
   function pinKeydownHandler(evt) {
     if (window.utils.isActivateEvent(evt)) {
       pinClickHandler(evt);
-      window.showCard(focusPin);
     }
   }
 
   return {
     pinClickHandler: pinClickHandler,
     pinKeydownHandler: pinKeydownHandler,
-    closeDialogClickHendler: closeDialogClickHendler
+    closeDialogClickHendler: closeDialogClickHendler,
   };
 })();
