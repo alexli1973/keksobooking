@@ -18,7 +18,7 @@ window.initializePins = (function () {
 
   // открыть окно с объявлением по клику на .pin
   function openDialog() {
-    window.showCard(dialog);
+    window.showCard();
     document.addEventListener('keydown', dialogKeydownHendler);
   }
 
@@ -26,6 +26,11 @@ window.initializePins = (function () {
   function closeDialog() {
     dialog.style.display = 'none';
     document.removeEventListener('keydown', dialogKeydownHendler);
+    // поставить фокус на последнюю метку
+    window.showCard(function () {
+      var pinActive = document.querySelector('.pin--active');
+      pinActive.focus();
+    });
   }
 
   // окно с объявлением изначально скрыто
@@ -65,9 +70,6 @@ window.initializePins = (function () {
       disablePin();
       activePin(curentPin);
       openDialog();
-      window.showCard(function () {
-        curentPin.focus();
-      });
     }
   }
 
@@ -80,6 +82,6 @@ window.initializePins = (function () {
   return {
     pinClickHandler: pinClickHandler,
     pinKeydownHandler: pinKeydownHandler,
-    closeDialogClickHendler: closeDialogClickHendler,
+    closeDialogClickHendler: closeDialogClickHendler
   };
 })();
