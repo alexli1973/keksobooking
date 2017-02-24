@@ -3,6 +3,8 @@
 window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
+  var onDialogClose = null;
+  var curentPin = null;
 
   function dialogKeydownHendler(evt) {
     if (window.utils.isDeactivateEvent(evt)) {
@@ -14,11 +16,15 @@ window.initializePins = (function () {
   function closeDialogClickHendler() {
     closeDialog();
     disablePin();
+
+    if (typeof onDialogClose === 'function') {
+      onDialogClose();
+    }
   }
 
   // открыть окно с объявлением по клику на .pin
   function openDialog() {
-    dialog.style.display = 'block';
+    window.showCard(dialog);
     document.addEventListener('keydown', dialogKeydownHendler);
   }
 
@@ -61,11 +67,17 @@ window.initializePins = (function () {
     activePin(targetPin);
     openDialog();
     if (window.utils.isActivateEvent(evt)) {
-      var curentPin = event.target;
+      curentPin = event.target;
       disablePin();
       activePin(curentPin);
       openDialog();
+      window.initializePins(setFocusPin);
     }
+  }
+
+  // поставить фокус на последнюю метку после закрытия карточки
+  function setFocusPin() {
+    curentPin.focus();
   }
 
   function pinKeydownHandler(evt) {
@@ -74,9 +86,20 @@ window.initializePins = (function () {
     }
   }
 
-  return {
-    pinClickHandler: pinClickHandler,
-    pinKeydownHandler: pinKeydownHandler,
-    closeDialogClickHendler: closeDialogClickHendler
+  // по клику на метку открывается попап .dialog и меняется цвет метки
+  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
+
+  tokyoPinMap.addEventListener('click', pinClickHandler, true);
+  tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
+
+  // Закрытие карточки объявления
+  // При нажатии на элемент dialog__close карточка объявления должна скрываться.
+  // При этом должен деактивироваться элемент pin, который был помечен как активный
+  var btnDialogClose = document.querySelector('.dialog__close');
+
+  btnDialogClose.addEventListener('click', closeDialogClickHendler);
+
+  return function (cb) {
+    onDialogClose = cb;
   };
 })();
