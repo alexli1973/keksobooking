@@ -99,12 +99,23 @@ window.initializePins = (function () {
 
   btnDialogClose.addEventListener('click', closeDialogClickHendler);
 
+  // function getSimilarApartments(data) {
+  //   var similarApartments = [];
+  //
+  //   for (var i = 0; i < data.length; i++) {
+  //     similarApartments[i] = data[i].name;
+  //   }
+  //
+  //   document.body.innerHTML = similarApartments;
+  // }
+
+  var errorHandler = function (err) {
+    //console.log(err);
+  };
+
   // скачать похожие объявления
-  window.load(function (url, data) {
-    url = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
-    tokyoPinMap.innerHTML = data;
-    console.log(evt);
-  });
+  var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+  window.load(DATA_URL, getSimilarApartments, errorHandler);
 
   return function (cb) {
     onDialogClose = cb;

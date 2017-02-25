@@ -1,10 +1,11 @@
 'use strict';
 
 window.load = (function () {
+  var errorHandler;
+
   return function (url, onLoad, onError) {
     // Создаём новый объект XMLHttpRequest
     var xhr = new XMLHttpRequest();
-    var errorHandler;
 
     xhr.addEventListener('load', onLoad);
 
