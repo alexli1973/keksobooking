@@ -99,6 +99,13 @@ window.initializePins = (function () {
 
   btnDialogClose.addEventListener('click', closeDialogClickHendler);
 
+  // скачать похожие объявления
+  window.load(function (url, data) {
+    url = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+    tokyoPinMap.innerHTML = data;
+    console.log(evt);
+  });
+
   return function (cb) {
     onDialogClose = cb;
   };
