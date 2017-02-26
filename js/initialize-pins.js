@@ -101,7 +101,7 @@ window.initializePins = (function () {
 
     // перебирать все элементы, создать для каждого из объявлений DOM-элемент на основе шаблона
     firstThreeApartments.forEach(function (item) {
-      fragment.appendChild(window.render(item));
+      fragment.appendChild(window.render.renderPin(item));
     });
 
     // добавить элемент в блок .tokyo__pin-map
@@ -110,6 +110,10 @@ window.initializePins = (function () {
     tokyoPinMap.addEventListener('click', pinClickHandler, true);
     tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
   }
+
+  // по клику на метку открывается попап .dialog и меняется цвет метки
+  tokyoPinMap.addEventListener('click', pinClickHandler, true);
+  tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
 
   // скачать похожие объявления
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
