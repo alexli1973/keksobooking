@@ -3,15 +3,12 @@
 window.load = (function () {
 
   var errorHandler = function (err) {
-    // alert(err); // так не работает и с console.log тоже
     return err;
   };
 
   return function (url, onLoad, onError) {
     // Создаём новый объект XMLHttpRequest
     var xhr = new XMLHttpRequest();
-
-    xhr.addEventListener('load', onLoad);
 
     // обработка ошибок
     if (typeof onError === 'function') {
