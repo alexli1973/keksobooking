@@ -1,22 +1,23 @@
 'use strict';
 
 window.render = (function () {
-  var wizardTemplate = document.querySelector('.setup-wizard-wrap');
+  var elemTemplate = document.querySelector('#pin-template');
+  var elementToClone = elemTemplate.content.querySelector('.pin');
 
-  return function (wizard) {
-    var wizardElement = wizardTemplate.cloneNode(true);
-    var name = document.createElement('span');
-    name.textContent = wizard.name;
-    wizardElement.appendChild(name);
+  return function (elem) {
+    var newElement = elementToClone.cloneNode(true);
+    newElement.style.left = elem.location.x + 'px';
+    newElement.style.top = elem.location.y + 'px';
+    newElement.setAttribute('tabindex', '1');
+    newElement.setAttribute('role', 'button');
+    newElement.setAttribute('aria-pressed', 'false');
+    newElement.appendChild(newElement);
 
-    var svgElement = wizardElement.children[0];
-    svgElement.style.position = 'static';
-    svgElement.style.width = 50;
-    svgElement.style.height = 50;
+    var avatar = newElement.querySelector('.rounded');
+    avatar.src = elem.author.avatar;
+    avatar.style.width = 40;
+    avatar.style.height = 40;
 
-    svgElement.querySelector('#wizard-coat').style.fill = wizard.color_coat;
-    svgElement.querySelector('#wizard-eyes').style.fill = wizard.color_eyes;
-
-    return wizardElement;
+    return newElement;
   };
 })();

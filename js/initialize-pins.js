@@ -3,6 +3,7 @@
 window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
+  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var onDialogClose = null;
   var curentPin = null;
 
@@ -86,12 +87,6 @@ window.initializePins = (function () {
     }
   }
 
-  // по клику на метку открывается попап .dialog и меняется цвет метки
-  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-
-  tokyoPinMap.addEventListener('click', pinClickHandler, true);
-  tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
-
   // Закрытие карточки объявления
   // При нажатии на элемент dialog__close карточка объявления должна скрываться.
   // При этом должен деактивироваться элемент pin, который был помечен как активный
@@ -99,18 +94,25 @@ window.initializePins = (function () {
 
   btnDialogClose.addEventListener('click', closeDialogClickHendler);
 
-  // function getSimilarApartments(data) {
-  //   var similarApartments = [];
-  //
-  //   for (var i = 0; i < data.length; i++) {
-  //     similarApartments[i] = data[i].name;
-  //   }
-  //
-  //   document.body.innerHTML = similarApartments;
-  // }
+  // получить список похожих объявлений
+  function getSimilarApartments(similarApartments) {
+    var fragment = document.createDocumentFragment();
+    var firstThreeApartments = similarApartments.slice(0, 3); // первые три элемента
+
+    // перебирать все элементы, создать для каждого из объявлений DOM-элемент на основе шаблона
+    firstThreeApartments.forEach(function (item) {
+      fragment.appendChild(window.render(item));
+    });
+
+    // добавить элемент в блок .tokyo__pin-map
+    tokyoPinMap.appendChild(fragment);
+    // по клику на метку открывается попап .dialog и меняется цвет метки
+    tokyoPinMap.addEventListener('click', pinClickHandler, true);
+    tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
+  }
 
   var errorHandler = function (err) {
-    //console.log(err);
+    // alert(err); // так не работает и с console.log тоже
   };
 
   // скачать похожие объявления
