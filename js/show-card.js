@@ -1,16 +1,18 @@
 'use strict';
 
 window.showCard = (function () {
-  var dialog = document.querySelector('.dialog');
-  var dialogTitle = dialog.querySelector('.lodge__title');
-  var dialogAddress = dialog.querySelector('.lodge__address');
-  var dialogPrice = dialog.querySelector('.lodge__price');
-  var dialogType = dialog.querySelector('.lodge__type');
-  var dialogRoomsGuests = dialog.querySelector('.lodge__rooms-and-guests');
-  var dialogCheckInOut = dialog.querySelector('.lodge__checkin-time');
-  //var dialogFeatures = dialog.querySelector('.lodge__features');
-  var dialogDescription = dialog.querySelector('.lodge__description');
-  //var dialogPhotos = dialog.querySelector('.lodge__photos');
+  var dialogTemplate = document.querySelector('#dialog-template');
+  var dialogElement = dialogTemplate.content.querySelector('.dialog');
+  var dialogClone = dialogElement.cloneNode(true);
+  var dialogTitle = dialogClone.querySelector('.lodge__title');
+  var dialogAddress = dialogClone.querySelector('.lodge__address');
+  var dialogPrice = dialogClone.querySelector('.lodge__price');
+  var dialogType = dialogClone.querySelector('.lodge__type');
+  var dialogRoomsGuests = dialogClone.querySelector('.lodge__rooms-and-guests');
+  var dialogCheckInOut = dialogClone.querySelector('.lodge__checkin-time');
+  var dialogFeatures = dialogClone.querySelector('.lodge__features');
+  var dialogDescription = dialogClone.querySelector('.lodge__description');
+  var dialogPhotos = dialogClone.querySelector('.lodge__photos');
 
   function renderFeatures(data) {
     var featuresList = data.offer.features;
@@ -43,8 +45,8 @@ window.showCard = (function () {
     dialogCheckInOut.textContent = 'Заед после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
     dialogDescription.textContent = data.offer.description;
 
-    renderPhoto(data.offer.photos);
-    renderFeatures(data.offer.features);
+    dialogPhotos.innerHTML = renderPhoto(data.offer.photos);
+    dialogFeatures.innerHTML = renderFeatures(data.offer.features);
   }
 
   return function (element, data) {

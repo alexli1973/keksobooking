@@ -106,9 +106,6 @@ window.initializePins = (function () {
 
     // добавить элемент в блок .tokyo__pin-map
     tokyoPinMap.appendChild(fragment);
-    // по клику на метку открывается попап .dialog и меняется цвет метки
-    tokyoPinMap.addEventListener('click', pinClickHandler, true);
-    tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
   }
 
   // по клику на метку открывается попап .dialog и меняется цвет метки
