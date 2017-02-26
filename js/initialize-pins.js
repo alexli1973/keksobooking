@@ -111,13 +111,9 @@ window.initializePins = (function () {
     tokyoPinMap.addEventListener('keydown', pinKeydownHandler, true);
   }
 
-  var errorHandler = function (err) {
-    // alert(err); // так не работает и с console.log тоже
-  };
-
   // скачать похожие объявления
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
-  window.load(DATA_URL, getSimilarApartments, errorHandler);
+  window.load(DATA_URL, getSimilarApartments);
 
   return function (cb) {
     onDialogClose = cb;

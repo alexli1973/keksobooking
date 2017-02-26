@@ -1,7 +1,11 @@
 'use strict';
 
 window.load = (function () {
-  var errorHandler;
+
+  var errorHandler = function (err) {
+    // alert(err); // так не работает и с console.log тоже
+    return err;
+  };
 
   return function (url, onLoad, onError) {
     // Создаём новый объект XMLHttpRequest
